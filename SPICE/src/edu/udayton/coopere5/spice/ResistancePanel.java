@@ -167,6 +167,15 @@ public class ResistancePanel extends JPanel {
 				components.add(currentComponent);
 				wireDraw = true;
 				currentComponent.addPoint(xpos, ypos);
+			} else if (event.getActionCommand() == "Current"){
+				currentComponent = new Current();
+				currentComponent.setPosition(xpos, ypos);
+				int status = currentComponent.showDialog(ResistancePanel.this.getParent(), true);
+				if (status == JOptionPane.YES_OPTION) {
+					ResistancePanel.this.addComponent(currentComponent);
+				} else {
+					currentComponent = null;
+				}
 			} else if (event.getActionCommand() == "Rotate") {
 				ResistancePanel.this.rotate(1);
 			} else if (event.getActionCommand() == "Delete") {
@@ -192,6 +201,8 @@ public class ResistancePanel extends JPanel {
 		popup.add(item = new JMenuItem("Resistor"));
 		item.addActionListener(menuListener);
 		popup.add(item = new JMenuItem("Wire"));
+		item.addActionListener(menuListener);
+		popup.add(item = new JMenuItem("Current"));
 		item.addActionListener(menuListener);
 		popup.add(popupRotate = new JMenuItem("Rotate"));
 		popupRotate.setEnabled(false);
