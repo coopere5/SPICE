@@ -339,6 +339,7 @@ public class ResistancePanel extends JPanel {
 			}
 			writer.close();
 			this.makeClean();
+			currentFile = f;
 			return 0;
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(this, "IOException");
