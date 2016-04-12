@@ -46,8 +46,8 @@ public class Voltage extends CircuitComponent {
 		this.net[0] = n1;
 		this.net[1] = n2;
 
-		this.xpos = X;
-		this.ypos = Y;
+		this.xpos = roundPos(X);
+		this.ypos = roundPos(Y);
 
 		this.angle = angle % 8;
 		this.value = val;
