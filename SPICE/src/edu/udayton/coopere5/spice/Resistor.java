@@ -40,8 +40,8 @@ public class Resistor extends CircuitComponent {
 		this.net[0] = Math.min(n1, n2);
 		this.net[1] = Math.max(n1, n2);
 
-		this.xpos = X;
-		this.ypos = Y;
+		this.xpos = roundPos(X);
+		this.ypos = roundPos(Y);
 
 		this.angle = angle % 8;
 

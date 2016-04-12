@@ -28,7 +28,9 @@ public abstract class CircuitComponent {
 	public static final int WIRE = 1;
 	public static final int VOLTAGE = 2;
 	public static final int CURRENT = 3;
-
+	
+	public static final int GRID_SIZE = 10;
+	
 	/**
 	 * Parses a value string of the form xk for the suffixes 'M', 'k', 'm' and
 	 * 'u'.
@@ -176,8 +178,8 @@ public abstract class CircuitComponent {
 	}
 
 	public void setPosition(int x, int y) {
-		this.xpos = x;
-		this.ypos = y;
+		this.xpos = roundPos(x);
+		this.ypos = roundPos(y);
 		this.relocateArea();
 	}
 
@@ -344,4 +346,10 @@ public abstract class CircuitComponent {
 	 * Moves the mouse bounding box to its new position.
 	 */
 	protected abstract void relocateArea();
+	
+	protected int roundPos(int x) {
+		int pos = x/GRID_SIZE;
+		pos = pos * GRID_SIZE;
+		return pos;
+	}
 }
