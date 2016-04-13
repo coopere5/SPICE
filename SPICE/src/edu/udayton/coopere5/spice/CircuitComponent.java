@@ -341,6 +341,8 @@ public abstract class CircuitComponent {
 		}
 		return retval;
 	}
+	
+	public abstract void drawLabel(Graphics g);
 
 	/**
 	 * Moves the mouse bounding box to its new position.

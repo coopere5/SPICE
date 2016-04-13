@@ -110,7 +110,7 @@ public class Resistor extends CircuitComponent {
 		this.setValue(val);
 	}
 
-	private void drawLabel(Graphics g) {
+	public void drawLabel(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 		FontMetrics fm = g2d.getFontMetrics();
 		Rectangle2D rn = fm.getStringBounds(name, g2d);

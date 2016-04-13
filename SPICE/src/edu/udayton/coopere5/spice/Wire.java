@@ -216,4 +216,10 @@ public class Wire extends CircuitComponent {
 		}
 	}
 
+	@Override
+	public void drawLabel(Graphics g) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

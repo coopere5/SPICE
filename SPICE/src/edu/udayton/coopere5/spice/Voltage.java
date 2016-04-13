@@ -122,4 +122,10 @@ public class Voltage extends CircuitComponent {
 		area = new Polygon(xpoints, ypoints, xpoints.length);
 	}
 
+	@Override
+	public void drawLabel(Graphics g) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
