@@ -76,7 +76,10 @@ public class ResistancePanel extends JPanel {
 				ResistancePanel.this.repaint();
 			} else if (clicks > 1 || button == 3) {
 				wireDraw = false;
-				currentComponent.showDialog(ResistancePanel.this.getParent(), true);
+				int status = currentComponent.showDialog(ResistancePanel.this.getParent(), true);
+				if(status!=JOptionPane.YES_OPTION){
+					ResistancePanel.this.removeComponent();
+				}
 			}
 			ResistancePanel.this.repaint();
 		}

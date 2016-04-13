@@ -59,7 +59,7 @@ public class Wire extends CircuitComponent {
 
 	@Override
 	public void addPoint(int x, int y) {
-		points.add(new Point(x, y));
+		points.add(new Point(roundPos(x), roundPos(y)));
 		// relocateArea();
 	}
 
