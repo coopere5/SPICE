@@ -40,8 +40,8 @@ public class Resistor extends CircuitComponent {
 		this.net[0] = Math.min(n1, n2);
 		this.net[1] = Math.max(n1, n2);
 
-		this.xpos = roundPos(X);
-		this.ypos = roundPos(Y);
+		this.xpos = this.roundPos(X);
+		this.ypos = this.roundPos(Y);
 
 		this.angle = angle % 8;
 
@@ -83,6 +83,63 @@ public class Resistor extends CircuitComponent {
 		this.drawLabel(g);
 	}
 
+	@Override
+	public void drawLabel(Graphics g) {
+		Graphics2D g2d = (Graphics2D) g;
+		FontMetrics fm = g2d.getFontMetrics();
+		Rectangle2D rn = fm.getStringBounds(name, g2d);
+		Rectangle2D rv = fm.getStringBounds(this.valueString(), g2d);
+
+		int xn, yn, xv, yv;
+		int x = xpos;
+		int y = ypos;
+
+		switch (angle) {
+		case 4:
+			x = x - 80;
+		case 0:
+			xn = x + ((80 - (int) rn.getWidth()) / 2);
+			yn = y - 15;
+			xv = x + ((80 - (int) rv.getWidth()) / 2);
+			yv = y + 15 + (int) rv.getHeight();
+			break;
+		case 5:
+			x = x - 56;
+			y = y - 56;
+		case 1:
+			xn = x + 30;
+			yn = y;
+			xv = x + 30;
+			yv = yn + (int) rv.getHeight();
+			break;
+		case 6:
+			y = y - 80;
+		case 2:
+			xn = x + 20;
+			yn = y + 40;
+			xv = x + 20;
+			yv = yn + (int) rv.getHeight();
+			break;
+		case 7:
+			x = x + 56;
+			y = y - 56;
+		case 3:
+			xn = x - 40 - (int) rn.getWidth();
+			yn = y;
+			xv = x - 40 - (int) rv.getWidth();
+			yv = yn + (int) rv.getHeight();
+			break;
+		default:
+			xn = x;
+			yn = y;
+			xv = x;
+			yv = y;
+			break;
+		}
+		g.drawString(name, xn, yn);
+		g.drawString(this.valueString(), xv, yv);
+	}
+
 	public void parallel(Resistor... resistors) {
 		double val = 0;
 		for (Resistor resistor : resistors) {
@@ -108,62 +165,6 @@ public class Resistor extends CircuitComponent {
 			val = val + resistance;
 		}
 		this.setValue(val);
-	}
-
-	private void drawLabel(Graphics g) {
-		Graphics2D g2d = (Graphics2D) g;
-		FontMetrics fm = g2d.getFontMetrics();
-		Rectangle2D rn = fm.getStringBounds(name, g2d);
-		Rectangle2D rv = fm.getStringBounds(this.valueString(), g2d);
-
-		int xn, yn, xv, yv;
-		int x = xpos;
-		int y = ypos;
-
-		switch (angle) {
-		case 4:
-			x = x - 80;
-		case 0:
-			xn = x + ((80 - (int) rn.getWidth()) / 2);
-			yn = y - 15;
-			xv = x + ((80 - (int) rv.getWidth()) / 2);
-			yv = y + 15 + (int) rv.getHeight();
-			break;
-		case 5:
-			x = x - 113;
-			y = y - 113;
-		case 1:
-			xn = x + 30;
-			yn = y + 28;
-			xv = x + 30;
-			yv = yn + (int) rv.getHeight();
-			break;
-		case 6:
-			y = y - 80;
-		case 2:
-			xn = x + 20;
-			yn = y + 40;
-			xv = x + 20;
-			yv = yn + (int) rv.getHeight();
-			break;
-		case 7:
-			x = x + 113;
-			y = y - 113;
-		case 3:
-			xn = x - 30;
-			yn = y + 28;
-			xv = x - 30;
-			yv = yn + (int) rv.getHeight();
-			break;
-		default:
-			xn = x;
-			yn = y;
-			xv = x;
-			yv = y;
-			break;
-		}
-		g.drawString(name, xn, yn);
-		g.drawString(this.valueString(), xv, yv);
 	}
 
 	@Override

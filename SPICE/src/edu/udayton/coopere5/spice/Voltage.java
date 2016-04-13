@@ -1,5 +1,6 @@
 package edu.udayton.coopere5.spice;
 
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
@@ -7,6 +8,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Path2D;
+import java.awt.geom.Rectangle2D;
 
 /**
  *
@@ -46,8 +48,8 @@ public class Voltage extends CircuitComponent {
 		this.net[0] = n1;
 		this.net[1] = n2;
 
-		this.xpos = roundPos(X);
-		this.ypos = roundPos(Y);
+		this.xpos = this.roundPos(X);
+		this.ypos = this.roundPos(Y);
 
 		this.angle = angle % 8;
 		this.value = val;
@@ -99,8 +101,66 @@ public class Voltage extends CircuitComponent {
 		g2d.rotate(Math.toRadians(45 * angle), x, y);
 		g2d.draw(polyline);
 		g2d.setTransform(old);
+		drawLabel(g);
 
 		System.err.println("Voltage drawing is NYI");
+	}
+
+	@Override
+	public void drawLabel(Graphics g) {
+		Graphics2D g2d = (Graphics2D) g;
+		FontMetrics fm = g2d.getFontMetrics();
+		Rectangle2D rn = fm.getStringBounds(name, g2d);
+		Rectangle2D rv = fm.getStringBounds(this.valueString(), g2d);
+
+		int xn, yn, xv, yv;
+		int x = xpos;
+		int y = ypos;
+
+		switch (angle) {
+		case 4:
+			x = x - 80;
+		case 0:
+			xn = x + ((80 - (int) rn.getWidth()) / 2);
+			yn = y - 25;
+			xv = x + ((80 - (int) rv.getWidth()) / 2);
+			yv = y + 25 + (int) rv.getHeight();
+			break;
+		case 5:
+			x = x - 56;
+			y = y - 56;
+		case 1:
+			xn = x + 45;
+			yn = y;
+			xv = x + 45;
+			yv = yn + (int) rv.getHeight();
+			break;
+		case 6:
+			y = y - 80;
+		case 2:
+			xn = x + 25;
+			yn = y + 40;
+			xv = x + 25;
+			yv = yn + (int) rv.getHeight();
+			break;
+		case 7:
+			x = x + 56;
+			y = y - 56;
+		case 3:
+			xn = x - 45 - (int) rn.getWidth();
+			yn = y;
+			xv = x - 45 - (int) rv.getWidth();
+			yv = yn + (int) rv.getHeight();
+			break;
+		default:
+			xn = x;
+			yn = y;
+			xv = x;
+			yv = y;
+			break;
+		}
+		g.drawString(name, xn, yn);
+		g.drawString(this.valueString(), xv, yv);
 	}
 
 	@Override
