@@ -104,8 +104,8 @@ public class Resistor extends CircuitComponent {
 			yv = y + 15 + (int) rv.getHeight();
 			break;
 		case 5:
-			x = x - 113;
-			y = y - 113;
+			x = x - 56;
+			y = y - 56;
 		case 1:
 			xn = x + 30;
 			yn = y;
@@ -121,8 +121,8 @@ public class Resistor extends CircuitComponent {
 			yv = yn + (int) rv.getHeight();
 			break;
 		case 7:
-			x = x + 113;
-			y = y - 113;
+			x = x + 56;
+			y = y - 56;
 		case 3:
 			xn = x - 40 - (int) rn.getWidth();
 			yn = y;
