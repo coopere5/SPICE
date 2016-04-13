@@ -114,6 +114,10 @@ public class Wire extends CircuitComponent {
 	@Override
 	public void setPosition(int x, int y) {
 	}
+	
+	@Override
+	public void relocateComponent(int x, int y, int dx, int dy){
+	}
 
 	@Override
 	public int showDialog(Component p, boolean isNew) {

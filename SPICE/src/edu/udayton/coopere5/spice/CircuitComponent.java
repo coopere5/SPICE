@@ -182,6 +182,12 @@ public abstract class CircuitComponent {
 		this.ypos = roundPos(y);
 		this.relocateArea();
 	}
+	
+	public void relocateComponent(int x, int y, int dx, int dy){
+		this.xpos = roundPos(x-dx);
+		this.ypos = roundPos(y-dy);
+		this.relocateArea();
+	}
 
 	public void setSelected(boolean selected) {
 		if (selected) {
