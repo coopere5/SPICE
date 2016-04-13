@@ -23,6 +23,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.SwingUtilities;
 
 import Jama.Matrix;
 
@@ -35,7 +36,6 @@ public class ResistancePanel extends JPanel {
 	private class MouseHandler extends MouseAdapter {
 		@Override
 		public void mouseClicked(MouseEvent event) {
-			int button = event.getButton();
 			xpos = event.getX();
 			ypos = event.getY();
 			int clicks = event.getClickCount();
@@ -68,16 +68,16 @@ public class ResistancePanel extends JPanel {
 							ResistancePanel.this.removeComponent();
 						}
 					}
-				} else if (button == 3) {
+				} else if (SwingUtilities.isRightMouseButton(event)) {
 					popup.show(ResistancePanel.this, event.getX(), event.getY());
 				}
-			} else if (clicks == 1 && button == 1) {
+			} else if (clicks == 1 && SwingUtilities.isLeftMouseButton(event)) {
 				currentComponent.addPoint(event.getX(), event.getY());
 				ResistancePanel.this.repaint();
-			} else if (clicks > 1 || button == 3) {
+			} else if (clicks > 1 || SwingUtilities.isRightMouseButton(event)) {
 				wireDraw = false;
 				int status = currentComponent.showDialog(ResistancePanel.this.getParent(), true);
-				if(status!=JOptionPane.YES_OPTION){
+				if (status != JOptionPane.YES_OPTION) {
 					ResistancePanel.this.removeComponent();
 				}
 			}
@@ -86,7 +86,7 @@ public class ResistancePanel extends JPanel {
 
 		@Override
 		public void mouseDragged(MouseEvent event) {
-			if (!wireDraw) {
+			if (!wireDraw && SwingUtilities.isLeftMouseButton(event)) {
 				xpos = event.getX();
 				ypos = event.getY();
 				// current = find(event.getPoint());
