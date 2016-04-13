@@ -40,8 +40,8 @@ public class Resistor extends CircuitComponent {
 		this.net[0] = Math.min(n1, n2);
 		this.net[1] = Math.max(n1, n2);
 
-		this.xpos = roundPos(X);
-		this.ypos = roundPos(Y);
+		this.xpos = this.roundPos(X);
+		this.ypos = this.roundPos(Y);
 
 		this.angle = angle % 8;
 
@@ -83,33 +83,7 @@ public class Resistor extends CircuitComponent {
 		this.drawLabel(g);
 	}
 
-	public void parallel(Resistor... resistors) {
-		double val = 0;
-		for (Resistor resistor : resistors) {
-			double resistance = resistor.getValue();
-			if (resistance != 0) {
-				val = val + (1 / resistance);
-			} else {
-				this.setValue(0);
-				return;
-			}
-		}
-		if (val != 0) {
-			this.setValue(1 / val);
-		} else {
-			this.setValue(0);
-		}
-	}
-
-	public void series(Resistor... resistors) {
-		double val = 0;
-		for (Resistor resistor : resistors) {
-			double resistance = resistor.getValue();
-			val = val + resistance;
-		}
-		this.setValue(val);
-	}
-
+	@Override
 	public void drawLabel(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 		FontMetrics fm = g2d.getFontMetrics();
@@ -164,6 +138,33 @@ public class Resistor extends CircuitComponent {
 		}
 		g.drawString(name, xn, yn);
 		g.drawString(this.valueString(), xv, yv);
+	}
+
+	public void parallel(Resistor... resistors) {
+		double val = 0;
+		for (Resistor resistor : resistors) {
+			double resistance = resistor.getValue();
+			if (resistance != 0) {
+				val = val + (1 / resistance);
+			} else {
+				this.setValue(0);
+				return;
+			}
+		}
+		if (val != 0) {
+			this.setValue(1 / val);
+		} else {
+			this.setValue(0);
+		}
+	}
+
+	public void series(Resistor... resistors) {
+		double val = 0;
+		for (Resistor resistor : resistors) {
+			double resistance = resistor.getValue();
+			val = val + resistance;
+		}
+		this.setValue(val);
 	}
 
 	@Override
