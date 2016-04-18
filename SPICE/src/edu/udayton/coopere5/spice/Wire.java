@@ -48,7 +48,7 @@ public class Wire extends CircuitComponent {
 		net[0] = Integer.parseInt(s[1]);
 		points = new ArrayList<Point2D>();
 		for (int i = 2; i < s.length; i = i + 2) {
-			points.add(new Point(roundPos(Integer.parseInt(s[i])), roundPos(Integer.parseInt(s[i + 1]))));
+			points.add(new Point(this.roundPos(Integer.parseInt(s[i])), this.roundPos(Integer.parseInt(s[i + 1]))));
 		}
 		value = -1;
 		area = new Polygon();
@@ -59,7 +59,7 @@ public class Wire extends CircuitComponent {
 
 	@Override
 	public void addPoint(int x, int y) {
-		points.add(new Point(roundPos(x), roundPos(y)));
+		points.add(new Point(this.roundPos(x), this.roundPos(y)));
 		// relocateArea();
 	}
 
@@ -75,6 +75,12 @@ public class Wire extends CircuitComponent {
 		}
 		g2d.draw(polyline);
 		// g2d.drawPolygon(area);
+	}
+
+	@Override
+	public void drawLabel(Graphics g) {
+		// TODO Auto-generated method stub
+
 	}
 
 	/**
@@ -95,6 +101,10 @@ public class Wire extends CircuitComponent {
 	}
 
 	@Override
+	public void relocateComponent(int x, int y) {
+	}
+
+	@Override
 	public void rotate(int dir) {
 	}
 
@@ -104,7 +114,7 @@ public class Wire extends CircuitComponent {
 
 	@Override
 	public void setLastPoint(int x, int y) {
-		points.set(points.size() - 1, new Point(roundPos(x), roundPos(y)));
+		points.set(points.size() - 1, new Point(this.roundPos(x), this.roundPos(y)));
 	}
 
 	public void setNet(int n) {
@@ -113,10 +123,6 @@ public class Wire extends CircuitComponent {
 
 	@Override
 	public void setPosition(int x, int y) {
-	}
-	
-	@Override
-	public void relocateComponent(int x, int y, int dx, int dy){
 	}
 
 	@Override
@@ -218,12 +224,6 @@ public class Wire extends CircuitComponent {
 			}
 			path.next();
 		}
-	}
-
-	@Override
-	public void drawLabel(Graphics g) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
