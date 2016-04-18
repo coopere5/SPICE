@@ -28,9 +28,9 @@ public abstract class CircuitComponent {
 	public static final int WIRE = 1;
 	public static final int VOLTAGE = 2;
 	public static final int CURRENT = 3;
-	
+
 	public static final int GRID_SIZE = 10;
-	
+
 	/**
 	 * Parses a value string of the form xk for the suffixes 'M', 'k', 'm' and
 	 * 'u'.
@@ -69,6 +69,7 @@ public abstract class CircuitComponent {
 	protected String name;
 	protected double value;
 	protected int xpos, ypos;
+	protected int dx, dy;
 	public Polygon area;
 	protected int angle;
 
@@ -88,6 +89,8 @@ public abstract class CircuitComponent {
 	 * @see ResistancePanel#paintComponents(Graphics)
 	 */
 	public abstract void draw(Graphics g);
+
+	public abstract void drawLabel(Graphics g);
 
 	public int getAngle() {
 		return angle;
@@ -140,6 +143,12 @@ public abstract class CircuitComponent {
 		return value;
 	}
 
+	public void relocateComponent(int x, int y) {
+		this.xpos = this.roundPos(x + dx);
+		this.ypos = this.roundPos(y + dy);
+		this.relocateArea();
+	}
+
 	/**
 	 * Rotates this CircuitComponent 45 degrees.
 	 *
@@ -173,13 +182,18 @@ public abstract class CircuitComponent {
 	public void setLastPoint(int x, int y) {
 	}
 
+	public void setMousePoint(int x, int y) {
+		this.dx = this.roundPos(this.xpos - x);
+		this.dy = this.roundPos(this.ypos - y);
+	}
+
 	public void setName(String n) {
 		this.name = n;
 	}
 
 	public void setPosition(int x, int y) {
-		this.xpos = roundPos(x);
-		this.ypos = roundPos(y);
+		this.xpos = this.roundPos(x);
+		this.ypos = this.roundPos(y);
 		this.relocateArea();
 	}
 
@@ -341,16 +355,14 @@ public abstract class CircuitComponent {
 		}
 		return retval;
 	}
-	
-	public abstract void drawLabel(Graphics g);
 
 	/**
 	 * Moves the mouse bounding box to its new position.
 	 */
 	protected abstract void relocateArea();
-	
+
 	protected int roundPos(int x) {
-		int pos = x/GRID_SIZE;
+		int pos = x / GRID_SIZE;
 		pos = pos * GRID_SIZE;
 		return pos;
 	}

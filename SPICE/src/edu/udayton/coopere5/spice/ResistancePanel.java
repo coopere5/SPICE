@@ -91,7 +91,7 @@ public class ResistancePanel extends JPanel {
 				ypos = event.getY();
 				// current = find(event.getPoint());
 				if (currentComponent != null) {
-					currentComponent.setPosition(xpos, ypos);
+					currentComponent.relocateComponent(xpos, ypos);
 					ResistancePanel.this.makeDirty();
 				}
 				ResistancePanel.this.repaint();
@@ -383,6 +383,7 @@ public class ResistancePanel extends JPanel {
 	private CircuitComponent find(Point p) {
 		for (CircuitComponent c : components) {
 			if (c.area.contains(p)) {
+				c.setMousePoint((int) p.getX(), (int) p.getY());
 				return c;
 			}
 		}
