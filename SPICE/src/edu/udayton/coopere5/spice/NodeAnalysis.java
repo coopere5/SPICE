@@ -83,7 +83,7 @@ public class NodeAnalysis {
 				}
 				break;
 			case CircuitComponent.VOLTAGE:
-				// system[1].set(m, 0, c.getValue());
+				system[1].set(m, 0, c.getValue());
 				if (node[0] - 1 >= 0) {
 					system[0].set(m, node[0] - 1, 1);
 					system[0].set(node[0] - 1, m, 1);
