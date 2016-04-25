@@ -11,11 +11,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
 
 import javax.swing.JFileChooser;
@@ -241,12 +238,6 @@ public class ResistancePanel extends JPanel {
 		this.wireDraw = false;
 	}
 
-	public void flip() {
-		this.makeDirty();
-		currentComponent.flip();
-		this.repaint();		
-	}
-
 	public ResistancePanel(List<CircuitComponent> cList) {
 		this();
 		this.components = cList;
@@ -255,6 +246,12 @@ public class ResistancePanel extends JPanel {
 	public void addComponent(CircuitComponent c) {
 		this.makeDirty();
 		components.add(c);
+		this.repaint();
+	}
+
+	public void flip() {
+		this.makeDirty();
+		currentComponent.flip();
 		this.repaint();
 	}
 
@@ -286,7 +283,7 @@ public class ResistancePanel extends JPanel {
 			this.clear();
 		}
 		currentFile = null;
-		
+
 		return rv;
 	}
 
@@ -391,7 +388,7 @@ public class ResistancePanel extends JPanel {
 		Matrix solutionMatrix = NodeAnalysis.solver(components);
 		String[] matrixLabels = NodeAnalysis.solutionNames(components);
 		String readout = "";
-		for(int i=0; i<solutionMatrix.getRowDimension(); i++){
+		for (int i = 0; i < solutionMatrix.getRowDimension(); i++) {
 			readout += matrixLabels[i] + ": " + String.format("%.2f", solutionMatrix.get(i, 0)) + "\n";
 		}
 		JOptionPane.showMessageDialog(this, readout, "Solution", JOptionPane.INFORMATION_MESSAGE);

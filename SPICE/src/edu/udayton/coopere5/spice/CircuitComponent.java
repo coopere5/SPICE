@@ -92,6 +92,12 @@ public abstract class CircuitComponent {
 
 	public abstract void drawLabel(Graphics g);
 
+	public void flip() {
+		angle = angle + 4;
+		angle = angle % 8;
+		this.relocateArea();
+	}
+
 	public int getAngle() {
 		return angle;
 	}
@@ -167,12 +173,6 @@ public abstract class CircuitComponent {
 		if (angle == -1) {
 			angle = 7;
 		}
-		angle = angle % 8;
-		this.relocateArea();
-	}
-	
-	public void flip() {
-		angle = angle + 4;
 		angle = angle % 8;
 		this.relocateArea();
 	}
