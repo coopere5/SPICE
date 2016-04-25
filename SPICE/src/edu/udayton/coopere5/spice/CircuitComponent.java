@@ -170,6 +170,12 @@ public abstract class CircuitComponent {
 		angle = angle % 8;
 		this.relocateArea();
 	}
+	
+	public void flip() {
+		angle = angle + 4;
+		angle = angle % 8;
+		this.relocateArea();
+	}
 
 	public void setAngle(int ori) {
 		this.angle = ori % 8;

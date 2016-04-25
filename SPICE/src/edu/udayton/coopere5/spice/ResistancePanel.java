@@ -49,13 +49,16 @@ public class ResistancePanel extends JPanel {
 					currentComponent.setSelected(true);
 					if (currentComponent.getType() == CircuitComponent.WIRE) {
 						popupRotate.setEnabled(false);
+						popupFlip.setEnabled(false);
 					} else {
 						popupRotate.setEnabled(true);
+						popupFlip.setEnabled(true);
 					}
 					popupDelete.setEnabled(true);
 				} else {
 					popupRotate.setEnabled(false);
 					popupDelete.setEnabled(false);
+					popupFlip.setEnabled(false);
 				}
 				ResistancePanel.this.repaint();
 				if (clicks > 1) {
@@ -118,13 +121,16 @@ public class ResistancePanel extends JPanel {
 					currentComponent.setSelected(true);
 					if (currentComponent.getType() == CircuitComponent.WIRE) {
 						popupRotate.setEnabled(false);
+						popupFlip.setEnabled(false);
 					} else {
 						popupRotate.setEnabled(true);
+						popupFlip.setEnabled(true);
 					}
 					popupDelete.setEnabled(true);
 				} else {
 					popupRotate.setEnabled(false);
 					popupDelete.setEnabled(false);
+					popupFlip.setEnabled(false);
 				}
 				ResistancePanel.this.repaint();
 			}
@@ -150,6 +156,7 @@ public class ResistancePanel extends JPanel {
 	private JPopupMenu popup;
 	private JMenuItem popupRotate;
 	private JMenuItem popupDelete;
+	private JMenuItem popupFlip;
 
 	private JFileChooser fileChooser;
 
@@ -192,6 +199,8 @@ public class ResistancePanel extends JPanel {
 				ResistancePanel.this.rotate(1);
 			} else if (event.getActionCommand() == "Delete") {
 				ResistancePanel.this.removeComponent();
+			} else if (event.getActionCommand() == "Flip") {
+				ResistancePanel.this.flip();
 			}
 		}
 	};
@@ -224,9 +233,18 @@ public class ResistancePanel extends JPanel {
 		popup.add(popupDelete = new JMenuItem("Delete"));
 		popupDelete.setEnabled(false);
 		popupDelete.addActionListener(menuListener);
+		popup.add(popupFlip = new JMenuItem("Flip"));
+		popupFlip.setEnabled(false);
+		popupFlip.addActionListener(menuListener);
 
 		this.dirty = false;
 		this.wireDraw = false;
+	}
+
+	public void flip() {
+		this.makeDirty();
+		currentComponent.flip();
+		this.repaint();		
 	}
 
 	public ResistancePanel(List<CircuitComponent> cList) {
@@ -381,6 +399,7 @@ public class ResistancePanel extends JPanel {
 		this.currentComponent = null;
 		popupRotate.setEnabled(false);
 		popupDelete.setEnabled(false);
+		popupFlip.setEnabled(false);
 
 		this.prevComponent = null;
 		this.currentFile = null;
