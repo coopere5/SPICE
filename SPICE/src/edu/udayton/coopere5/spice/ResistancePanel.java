@@ -369,13 +369,12 @@ public class ResistancePanel extends JPanel {
 
 	public void solve() {
 		Matrix solutionMatrix = NodeAnalysis.solver(components);
-		StringWriter buffer = new StringWriter();
-		PrintWriter output = new PrintWriter(buffer);
-		solutionMatrix.print(output, NumberFormat.getInstance(Locale.US), 10);
-
-		String solutionString = buffer.toString();
-
-		JOptionPane.showMessageDialog(this, solutionString, "Solution", JOptionPane.INFORMATION_MESSAGE);
+		String[] matrixLabels = NodeAnalysis.solutionNames(components);
+		String readout = "";
+		for(int i=0; i<solutionMatrix.getRowDimension(); i++){
+			readout += matrixLabels[i] + ": " + String.format("%.2f", solutionMatrix.get(i, 0)) + "\n";
+		}
+		JOptionPane.showMessageDialog(this, readout, "Solution", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	private void clear() {

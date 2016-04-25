@@ -16,6 +16,21 @@ public class NodeAnalysis {
 	// to
 	// could do a String[] corresponding to the system
 
+	public static String[] solutionNames(List<CircuitComponent> components) {
+		String[] names;
+		int numRows;
+		int[] numNodes = countNodes(components);
+		numRows = numNodes[0] + numNodes[1];
+		names = new String[numRows];
+		for(int i=1; i<=numNodes[0]; i++){
+			names[i-1] = "V" + i;
+		}
+		for(int i=1; i<=numNodes[1]; i++){
+			names[numNodes[0]+i-1] = "i_V" + i;
+		}
+		return names;
+	}
+
 	/**
 	 * Generates the solution Matrix of a circuit defined by
 	 * <code>components</code> using {@link #buildsystem(List)}. Solution Matrix
@@ -43,30 +58,16 @@ public class NodeAnalysis {
 	 * @return - array containing A and z
 	 */
 	private static Matrix[] buildsystem(List<CircuitComponent> components) {
-		int numNodes = 0;
-		int numSources = 0;
-		int numRows;
 		Matrix[] system = new Matrix[2];
-		ArrayList<Integer> nodes = new ArrayList<Integer>();
-		for (CircuitComponent c : components) {
-			if (c.getType() != CircuitComponent.WIRE) {
-				for (int i : c.getNet()) {
-					if (!nodes.contains(i) && i != 0) {
-						nodes.add(i);
-					}
-				}
-				if (c.getType() == CircuitComponent.VOLTAGE) {
-					numSources++;
-				}
-			}
-		}
-		numNodes = nodes.size();
-		numRows = numNodes + numSources;
+		int numRows;
+		int[] numNodes = countNodes(components);
+
+		numRows = numNodes[0] + numNodes[1];
 		system[0] = new Matrix(numRows, numRows);
 		system[1] = new Matrix(numRows, 1);
 
 		int[] node;
-		int m = numNodes;
+		int m = numNodes[0];
 		for (CircuitComponent c : components) {
 			node = c.getNet();
 			switch (c.getType()) {
@@ -129,5 +130,26 @@ public class NodeAnalysis {
 		} else {
 			return 0;
 		}
+	}
+
+	private static int[] countNodes(List<CircuitComponent> components) {
+		int rv[] = new int[2];
+		int numSources = 0;
+		ArrayList<Integer> nodes = new ArrayList<Integer>();
+		for (CircuitComponent c : components) {
+			if (c.getType() != CircuitComponent.WIRE) {
+				for (int i : c.getNet()) {
+					if (!nodes.contains(i) && i != 0) {
+						nodes.add(i);
+					}
+				}
+				if (c.getType() == CircuitComponent.VOLTAGE) {
+					numSources++;
+				}
+			}
+		}
+		rv[0] = nodes.size();
+		rv[1] = numSources;
+		return rv;
 	}
 }
