@@ -282,9 +282,11 @@ public class ResistancePanel extends JPanel {
 	 */
 	public int newFile() {
 		int rv = this.saveIfDirty();
-		if (rv != 0) {
+		if (rv == 0) {
 			this.clear();
 		}
+		currentFile = null;
+		
 		return rv;
 	}
 
